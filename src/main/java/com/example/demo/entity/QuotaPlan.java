@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -29,5 +30,45 @@ public class QuotaPlan {
         this.active = active;
     }
 
+    // ✅ GETTERS
+    public Long getId() {
+        return id;
+    }
 
+    public String getPlanName() {
+        return planName;
+    }
+
+    public Integer getDailyLimit() {
+        return dailyLimit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    // ✅ SETTERS
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
+    }
+
+    public void setDailyLimit(Integer dailyLimit) {
+        this.dailyLimit = dailyLimit;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
