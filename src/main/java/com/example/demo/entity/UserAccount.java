@@ -36,6 +36,4 @@ public class UserAccount {
         this.password = password;
         this.role = role;
     }
-
-    // getters & setters
 }

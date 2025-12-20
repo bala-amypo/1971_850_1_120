@@ -32,6 +32,4 @@ public class RateLimitEnforcement {
         this.limitExceededBy = limitExceededBy;
         this.message = message;
     }
-
-    // getters & setters
 }
