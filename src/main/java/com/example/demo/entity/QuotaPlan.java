@@ -3,30 +3,50 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "quota_plans", uniqueConstraints = @UniqueConstraint(columnNames = "planName"))
 public class QuotaPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String planName;
-
-    @Column(nullable = false)
-    private Integer dailyLimit;
-
+    private int dailyLimit;
     private String description;
-
-    @Column(nullable = false)
     private Boolean active = true;
 
-    public QuotaPlan() {}
+    public Long getId() {
+        return id;
+    }
 
-    public QuotaPlan(String planName, Integer dailyLimit, String description, Boolean active) {
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
         this.planName = planName;
+    }
+
+    public int getDailyLimit() {
+        return dailyLimit;
+    }
+
+    public void setDailyLimit(int dailyLimit) {
         this.dailyLimit = dailyLimit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }

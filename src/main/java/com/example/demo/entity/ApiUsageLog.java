@@ -4,28 +4,34 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "api_usage_logs")
 public class ApiUsageLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "api_key_id", nullable = false)
-    private ApiKey apiKey;
-
-    @Column(nullable = false)
-    private String endpoint;
-
-    @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    public ApiUsageLog() {}
+    @ManyToOne
+    private ApiKey apiKey;
 
-    public ApiUsageLog(ApiKey apiKey, String endpoint, LocalDateTime timestamp) {
-        this.apiKey = apiKey;
-        this.endpoint = endpoint;
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public ApiKey getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(ApiKey apiKey) {
+        this.apiKey = apiKey;
     }
 }
