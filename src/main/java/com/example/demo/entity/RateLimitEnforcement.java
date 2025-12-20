@@ -4,32 +4,44 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "rate_limit_enforcements")
 public class RateLimitEnforcement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
+    private int limitExceededBy;
+
+    private LocalDateTime timestamp;
+
     @ManyToOne
-    @JoinColumn(name = "api_key_id", nullable = false)
     private ApiKey apiKey;
 
-    @Column(nullable = false)
-    private LocalDateTime blockedAt;
+    public Long getId() {
+        return id;
+    }
 
-    @Column(nullable = false)
-    private Integer limitExceededBy;
+    public int getLimitExceededBy() {
+        return limitExceededBy;
+    }
 
-    private String message;
-
-    public RateLimitEnforcement() {}
-
-    public RateLimitEnforcement(ApiKey apiKey, LocalDateTime blockedAt,
-                                Integer limitExceededBy, String message) {
-        this.apiKey = apiKey;
-        this.blockedAt = blockedAt;
+    public void setLimitExceededBy(int limitExceededBy) {
         this.limitExceededBy = limitExceededBy;
-        this.message = message;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public ApiKey getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(ApiKey apiKey) {
+        this.apiKey = apiKey;
     }
 }
