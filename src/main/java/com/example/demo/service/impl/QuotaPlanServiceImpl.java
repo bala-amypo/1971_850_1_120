@@ -12,13 +12,12 @@ import java.util.List;
 @Service
 public class QuotaPlanServiceImpl implements QuotaPlanService {
 
-    private final QuotaPlanRepository quotaPlanRepository;
+    private final QuotaPlanRepository planRepo;
 
-    public QuotaPlanServiceImpl(QuotaPlanRepository quotaPlanRepository) {
-        this.quotaPlanRepository = quotaPlanRepository;
+    public QuotaPlanServiceImpl(QuotaPlanRepository planRepo) {
+        this.planRepo = planRepo;
     }
 
-    // CREATE
     @Override
     public QuotaPlan createQuotaPlan(QuotaPlan plan) {
 
@@ -26,19 +25,17 @@ public class QuotaPlanServiceImpl implements QuotaPlanService {
             throw new BadRequestException("Daily limit must be greater than 0");
         }
 
-        if (quotaPlanRepository.findByPlanName(plan.getPlanName()).isPresent()) {
-            throw new BadRequestException("Quota plan already exists");
+        if (planRepo.findByPlanName(plan.getPlanName()).isPresent()) {
+            throw new IllegalArgumentException("Duplicate plan name");
         }
 
-        return quotaPlanRepository.save(plan);
+        return planRepo.save(plan);
     }
 
-    // UPDATE
     @Override
     public QuotaPlan updateQuotaPlan(Long id, QuotaPlan plan) {
 
-        QuotaPlan existing = quotaPlanRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("QuotaPlan not found"));
+        QuotaPlan existing = getQuotaPlanById(id);
 
         if (plan.getDailyLimit() <= 0) {
             throw new BadRequestException("Daily limit must be greater than 0");
@@ -48,29 +45,24 @@ public class QuotaPlanServiceImpl implements QuotaPlanService {
         existing.setDailyLimit(plan.getDailyLimit());
         existing.setDescription(plan.getDescription());
 
-        return quotaPlanRepository.save(existing);
+        return planRepo.save(existing);
     }
 
-    // READ (BY ID)
     @Override
     public QuotaPlan getQuotaPlanById(Long id) {
-        return quotaPlanRepository.findById(id)
+        return planRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("QuotaPlan not found"));
     }
 
-    // READ (ALL)
     @Override
     public List<QuotaPlan> getAllPlans() {
-        return quotaPlanRepository.findAll();
+        return planRepo.findAll();
     }
 
-    // DELETE (SOFT DELETE)
     @Override
     public void deactivateQuotaPlan(Long id) {
-        QuotaPlan plan = quotaPlanRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("QuotaPlan not found"));
-
+        QuotaPlan plan = getQuotaPlanById(id);
         plan.setActive(false);
-        quotaPlanRepository.save(plan);
+        planRepo.save(plan);
     }
 }
