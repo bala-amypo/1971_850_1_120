@@ -1,9 +1,14 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "user_account", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserAccount {
@@ -28,6 +33,4 @@ public class UserAccount {
             inverseJoinColumns = @JoinColumn(name = "plan_id")
     )
     private Set<QuotaPlan> quotaPlans = new HashSet<>();
-
-    // getters & setters
 }

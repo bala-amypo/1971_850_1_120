@@ -1,8 +1,13 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "api_key", uniqueConstraints = @UniqueConstraint(columnNames = "key_value"))
 public class ApiKey {
@@ -36,6 +41,4 @@ public class ApiKey {
     void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-    // getters & setters
 }

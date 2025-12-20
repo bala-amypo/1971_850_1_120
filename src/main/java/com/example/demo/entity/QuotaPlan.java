@@ -2,7 +2,11 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "quota_plan", uniqueConstraints = @UniqueConstraint(columnNames = "plan_name"))
 public class QuotaPlan {
@@ -22,6 +26,4 @@ public class QuotaPlan {
 
     @Column(nullable = false)
     private Boolean active = true;
-
-    // getters & setters
 }
