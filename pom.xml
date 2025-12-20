@@ -41,9 +41,10 @@
 
         <!-- MySQL Connector -->
         <dependency>
+    <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-j</artifactId>
-    <version>8.0.33</version>
+    <version>8.0.32</version>
     <scope>runtime</scope>
 </dependency>
 
@@ -97,3 +98,6 @@
         </plugins>
     </build>
 </project>
+
+
+rm -rf ~/.m2/repository/mysql/mysql-connector-j
