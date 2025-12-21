@@ -4,9 +4,6 @@ import com.example.demo.entity.QuotaPlan;
 import java.util.List;
 
 public interface QuotaPlanService {
-    QuotaPlan create(QuotaPlan plan);
-    QuotaPlan update(Long id, QuotaPlan plan);
-    QuotaPlan getById(Long id);
-    List<QuotaPlan> getAll();
-    void deactivate(Long id);
+
+    List<QuotaPlan> findAll();
 }
