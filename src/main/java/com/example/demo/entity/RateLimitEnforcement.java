@@ -1,8 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "rate_limit_enforcement")
@@ -13,18 +12,15 @@ public class RateLimitEnforcement {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "api_key_id", nullable = false)
     private ApiKey apiKey;
 
-    @Column(nullable = false)
-    private Timestamp blockedAt;
+    private String reason;
+    private LocalDateTime blockedAt = LocalDateTime.now();
 
-    @Min(1)
-    @Column(nullable = false)
-    private Integer limitExceededBy;
+    public Long getId() { return id; }
+    public ApiKey getApiKey() { return apiKey; }
+    public String getReason() { return reason; }
 
-    @Column(columnDefinition = "TEXT")
-    private String message;
-
-    public RateLimitEnforcement() {}
+    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
+    public void setReason(String reason) { this.reason = reason; }
 }

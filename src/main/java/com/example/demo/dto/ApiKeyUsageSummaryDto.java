@@ -7,8 +7,7 @@ public class ApiKeyUsageSummaryDto {
     private Long requestsUsed;
     private Long remainingRequests;
 
-    public ApiKeyUsageSummaryDto() {
-    }
+    public ApiKeyUsageSummaryDto() {}
 
     public ApiKeyUsageSummaryDto(Long apiKeyId,
                                  Long dailyLimit,
