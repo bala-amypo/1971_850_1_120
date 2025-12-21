@@ -1,4 +1,3 @@
-
 package com.example.demo.controller;
 
 import com.example.demo.entity.QuotaPlan;
@@ -11,34 +10,14 @@ import java.util.List;
 @RequestMapping("/api/quota-plans")
 public class QuotaPlanController {
 
-    private final QuotaPlanService service;
+    private final QuotaPlanService quotaPlanService;
 
-    public QuotaPlanController(QuotaPlanService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public QuotaPlan create(@RequestBody QuotaPlan plan) {
-        return service.create(plan);
-    }
-
-    @PutMapping("/{id}")
-    public QuotaPlan update(@PathVariable Long id, @RequestBody QuotaPlan plan) {
-        return service.update(id, plan);
-    }
-
-    @GetMapping("/{id}")
-    public QuotaPlan get(@PathVariable Long id) {
-        return service.getById(id);
+    public QuotaPlanController(QuotaPlanService quotaPlanService) {
+        this.quotaPlanService = quotaPlanService;
     }
 
     @GetMapping
-    public List<QuotaPlan> getAll() {
-        return service.getAll();
-    }
-
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
-        service.deactivate(id);
+    public List<QuotaPlan> getAllQuotaPlans() {
+        return quotaPlanService.findAll();
     }
 }

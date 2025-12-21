@@ -1,8 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "key_exemption")
@@ -13,18 +12,21 @@ public class KeyExemption {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "api_key_id", nullable = false)
     private ApiKey apiKey;
 
-    private String notes;
-
     private Boolean unlimitedAccess = false;
+    private LocalDateTime validUntil;
 
-    @Min(0)
-    private Integer temporaryExtensionLimit;
+    public Long getId() { return id; }
+    public ApiKey getApiKey() { return apiKey; }
+    public Boolean getUnlimitedAccess() { return unlimitedAccess; }
+    public LocalDateTime getValidUntil() { return validUntil; }
 
-    @Column(nullable = false)
-    private Timestamp validUntil;
-
-    public KeyExemption() {}
+    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
+    public void setUnlimitedAccess(Boolean unlimitedAccess) {
+        this.unlimitedAccess = unlimitedAccess;
+    }
+    public void setValidUntil(LocalDateTime validUntil) {
+        this.validUntil = validUntil;
+    }
 }
