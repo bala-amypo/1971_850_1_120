@@ -2,11 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "quota_plan", uniqueConstraints = @UniqueConstraint(columnNames = "plan_name"))
 public class QuotaPlan {
@@ -22,8 +18,20 @@ public class QuotaPlan {
     @Column(nullable = false)
     private Integer dailyLimit;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
     private Boolean active = true;
+
+    public QuotaPlan() {}
+
+    // getters & setters
+    public Long getId() { return id; }
+    public String getPlanName() { return planName; }
+    public Integer getDailyLimit() { return dailyLimit; }
+    public Boolean getActive() { return active; }
+    public void setPlanName(String planName) { this.planName = planName; }
+    public void setDailyLimit(Integer dailyLimit) { this.dailyLimit = dailyLimit; }
+    public void setActive(Boolean active) { this.active = active; }
 }

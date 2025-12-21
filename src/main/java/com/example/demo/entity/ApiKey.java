@@ -1,13 +1,8 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.sql.Timestamp;
 
-import java.time.LocalDateTime;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "api_key", uniqueConstraints = @UniqueConstraint(columnNames = "key_value"))
 public class ApiKey {
@@ -26,19 +21,21 @@ public class ApiKey {
     @JoinColumn(name = "plan_id", nullable = false)
     private QuotaPlan plan;
 
+    @Column(nullable = false)
     private Boolean active = true;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(nullable = false, updatable = false)
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    @PrePersist
-    void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
+    @Column(nullable = false)
+    private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-    @PreUpdate
-    void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    public ApiKey() {}
+
+    // getters & setters
+    public Long getId() { return id; }
+    public String getKeyValue() { return keyValue; }
+    public void setKeyValue(String keyValue) { this.keyValue = keyValue; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

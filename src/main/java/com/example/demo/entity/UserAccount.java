@@ -1,14 +1,9 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_account", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserAccount {
@@ -26,11 +21,28 @@ public class UserAccount {
     @Column(nullable = false)
     private String role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_quota_plan",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "plan_id")
+        name = "user_quota_plan",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "plan_id")
     )
     private Set<QuotaPlan> quotaPlans = new HashSet<>();
+
+    public UserAccount() {}
+
+    public UserAccount(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    // getters and setters
+    public Long getId() { return id; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
+    public void setRole(String role) { this.role = role; }
 }
