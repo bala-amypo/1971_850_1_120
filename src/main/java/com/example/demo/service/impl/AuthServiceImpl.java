@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.RegistrationRequestDto;
+import com.example.demo.dto.RegisterRequestDto;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.AuthService;
@@ -17,7 +17,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserAccount register(RegistrationRequestDto request) {
+    public UserAccount register(RegisterRequestDto request) {
         UserAccount user = new UserAccount();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
