@@ -10,19 +10,19 @@ import java.util.List;
 @Service
 public class QuotaPlanServiceImpl implements QuotaPlanService {
 
-    private final QuotaPlanRepository quotaPlanRepository;
+    private final QuotaPlanRepository repository;
 
-    public QuotaPlanServiceImpl(QuotaPlanRepository quotaPlanRepository) {
-        this.quotaPlanRepository = quotaPlanRepository;
+    public QuotaPlanServiceImpl(QuotaPlanRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public QuotaPlan create(QuotaPlan quotaPlan) {
-        return quotaPlanRepository.save(quotaPlan);
+    public QuotaPlan create(QuotaPlan plan) {
+        return repository.save(plan);
     }
 
     @Override
     public List<QuotaPlan> findAll() {
-        return quotaPlanRepository.findAll();
+        return repository.findAll();
     }
 }
