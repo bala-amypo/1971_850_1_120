@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/api/rate-limit-enforcements")
 public class RateLimitEnforcementController {
 
-    private final RateLimitEnforcementService rateLimitEnforcementService;
+    private final RateLimitEnforcementService service;
 
-    public RateLimitEnforcementController(RateLimitEnforcementService rateLimitEnforcementService) {
-        this.rateLimitEnforcementService = rateLimitEnforcementService;
+    public RateLimitEnforcementController(RateLimitEnforcementService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void createRateLimit(@RequestBody RateLimitEnforcement enforcement) {
-        rateLimitEnforcementService.create(enforcement);
+    public RateLimitEnforcement create(@RequestBody RateLimitEnforcement enforcement) {
+        return service.create(enforcement);
     }
 
     @GetMapping
-    public List<RateLimitEnforcement> getAllRateLimitEnforcements() {
-        return rateLimitEnforcementService.findAll();
+    public List<RateLimitEnforcement> getAll() {
+        return service.findAll();
     }
 }

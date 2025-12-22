@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/api/usage-logs")
 public class ApiUsageLogController {
 
-    private final ApiUsageLogService apiUsageLogService;
+    private final ApiUsageLogService service;
 
-    public ApiUsageLogController(ApiUsageLogService apiUsageLogService) {
-        this.apiUsageLogService = apiUsageLogService;
+    public ApiUsageLogController(ApiUsageLogService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void createUsageLog(@RequestBody ApiUsageLog log) {
-        apiUsageLogService.create(log);
+    public ApiUsageLog create(@RequestBody ApiUsageLog log) {
+        return service.create(log);
     }
 
     @GetMapping
-    public List<ApiUsageLog> getAllUsageLogs() {
-        return apiUsageLogService.findAll();
+    public List<ApiUsageLog> getAll() {
+        return service.findAll();
     }
 }

@@ -1,30 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
+import com.example.demo.entity.QuotaPlan;
+import com.example.demo.service.QuotaPlanService;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class KeyExemption {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@RestController
+@RequestMapping("/api/quota-plans")
+public class QuotaPlanController {
 
-    @OneToOne
-    private ApiKey apiKey;
+    private final QuotaPlanService service;
 
-    private Boolean unlimitedAccess;
-    private LocalDateTime validUntil;
+    public QuotaPlanController(QuotaPlanService service) {
+        this.service = service;
+    }
 
-    public Long getId() { return id; }
-    public ApiKey getApiKey() { return apiKey; }
-    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
-    public Boolean getUnlimitedAccess() { return unlimitedAccess; }
-    public void setUnlimitedAccess(Boolean unlimitedAccess) { this.unlimitedAccess = unlimitedAccess; }
-    public LocalDateTime getValidUntil() { return validUntil; }
-    public void setValidUntil(LocalDateTime validUntil) { this.validUntil = validUntil; }
+    @PostMapping
+    public QuotaPlan create(@RequestBody QuotaPlan plan) {
+        return service.create(plan);
+    }
+
+    @GetMapping
+    public List<QuotaPlan> getAll() {
+        return service.findAll();
+    }
 }

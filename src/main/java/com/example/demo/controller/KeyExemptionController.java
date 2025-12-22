@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/api/key-exemptions")
 public class KeyExemptionController {
 
-    private final KeyExemptionService keyExemptionService;
+    private final KeyExemptionService service;
 
-    public KeyExemptionController(KeyExemptionService keyExemptionService) {
-        this.keyExemptionService = keyExemptionService;
+    public KeyExemptionController(KeyExemptionService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void createKeyExemption(@RequestBody KeyExemption exemption) {
-        keyExemptionService.create(exemption);
+    public KeyExemption create(@RequestBody KeyExemption exemption) {
+        return service.create(exemption);
     }
 
     @GetMapping
-    public List<KeyExemption> getAllKeyExemptions() {
-        return keyExemptionService.findAll();
+    public List<KeyExemption> getAll() {
+        return service.findAll();
     }
 }
