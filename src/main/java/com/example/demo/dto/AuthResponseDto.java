@@ -4,11 +4,9 @@ public class AuthResponseDto {
 
     private String token;
 
-    // ✅ REQUIRED no-arg constructor
     public AuthResponseDto() {
     }
 
-    // ✅ REQUIRED constructor with token
     public AuthResponseDto(String token) {
         this.token = token;
     }
