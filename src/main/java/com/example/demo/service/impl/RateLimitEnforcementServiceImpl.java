@@ -8,23 +8,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RateLimitEnforcementServiceImpl
-        implements RateLimitEnforcementService {
+public class RateLimitEnforcementServiceImpl implements RateLimitEnforcementService {
 
-    private final RateLimitEnforcementRepository rateLimitRepository;
+    private final RateLimitEnforcementRepository repository;
 
-    public RateLimitEnforcementServiceImpl(
-            RateLimitEnforcementRepository rateLimitRepository) {
-        this.rateLimitRepository = rateLimitRepository;
+    public RateLimitEnforcementServiceImpl(RateLimitEnforcementRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public RateLimitEnforcement create(RateLimitEnforcement enforcement) {
-        return rateLimitRepository.save(enforcement);
+        return repository.save(enforcement);
     }
 
     @Override
     public List<RateLimitEnforcement> findAll() {
-        return rateLimitRepository.findAll();
+        return repository.findAll();
     }
 }
