@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface QuotaPlanService {
 
-    QuotaPlan create(QuotaPlan quotaPlan);
+    QuotaPlan create(QuotaPlan plan);
 
     List<QuotaPlan> findAll();
 }
