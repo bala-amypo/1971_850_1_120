@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,29 +17,25 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-
-            
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
-
             .authorizeHttpRequests(auth -> auth
-            
                 .requestMatchers(
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/v3/api-docs/**",
-                        "/v3/api-docs",
-                        "/webjars/**"
+                        "/auth/**"
                 ).permitAll()
-
-                // ✅ Auth APIs public
-                .requestMatchers("/auth/**").permitAll()
-
-                // 🔐 Everything else secured
                 .anyRequest().authenticated()
             );
 
         return http.build();
+    }
+
+    // ✅ THIS IS THE MISSING BEAN
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
