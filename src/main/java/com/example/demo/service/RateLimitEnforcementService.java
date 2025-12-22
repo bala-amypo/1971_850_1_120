@@ -1,4 +1,4 @@
 public interface RateLimitEnforcementService {
-    RateLimitEnforcement create(RateLimitEnforcement enforcement);
+    RateLimitEnforcement create(RateLimitEnforcement r);
     List<RateLimitEnforcement> findAll();
 }
