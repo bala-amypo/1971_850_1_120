@@ -1,30 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
+import com.example.demo.entity.KeyExemption;
+import com.example.demo.service.KeyExemptionService;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class KeyExemption {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@RestController
+@RequestMapping("/api/key-exemptions")
+public class KeyExemptionController {
 
-    @OneToOne
-    private ApiKey apiKey;
+    private final KeyExemptionService keyExemptionService;
 
-    private Boolean unlimitedAccess;
-    private LocalDateTime validUntil;
+    public KeyExemptionController(KeyExemptionService keyExemptionService) {
+        this.keyExemptionService = keyExemptionService;
+    }
 
-    public Long getId() { return id; }
-    public ApiKey getApiKey() { return apiKey; }
-    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
-    public Boolean getUnlimitedAccess() { return unlimitedAccess; }
-    public void setUnlimitedAccess(Boolean unlimitedAccess) { this.unlimitedAccess = unlimitedAccess; }
-    public LocalDateTime getValidUntil() { return validUntil; }
-    public void setValidUntil(LocalDateTime validUntil) { this.validUntil = validUntil; }
+    @PostMapping
+    public void createKeyExemption(@RequestBody KeyExemption exemption) {
+        keyExemptionService.create(exemption);
+    }
+
+    @GetMapping
+    public List<KeyExemption> getAllKeyExemptions() {
+        return keyExemptionService.findAll();
+    }
 }
