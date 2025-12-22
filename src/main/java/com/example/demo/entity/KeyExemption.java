@@ -1,3 +1,8 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class KeyExemption {
 
@@ -5,11 +10,9 @@ public class KeyExemption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean unlimitedAccess;
-    private LocalDateTime validUntil;
-
     @OneToOne
     private ApiKey apiKey;
 
-    // getters & setters
+    private Boolean unlimitedAccess;
+    private LocalDateTime validUntil;
 }

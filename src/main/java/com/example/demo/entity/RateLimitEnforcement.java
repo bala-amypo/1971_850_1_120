@@ -1,3 +1,7 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+
 @Entity
 public class RateLimitEnforcement {
 
@@ -5,10 +9,8 @@ public class RateLimitEnforcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String reason;
-
     @ManyToOne
     private ApiKey apiKey;
 
-    // getters & setters
+    private String reason;
 }
