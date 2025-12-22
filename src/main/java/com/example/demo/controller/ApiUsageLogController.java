@@ -1,21 +1,20 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.ApiUsageLog;
-import com.example.demo.service.ApiUsageLogService;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/usage-logs")
 public class ApiUsageLogController {
 
-    private final ApiUsageLogService apiUsageLogService;
+    private final ApiUsageLogService service;
 
-    public ApiUsageLogController(ApiUsageLogService apiUsageLogService) {
-        this.apiUsageLogService = apiUsageLogService;
+    public ApiUsageLogController(ApiUsageLogService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void logUsage(@RequestBody ApiUsageLog log) {
-        apiUsageLogService.log(log);
+    public void create(@RequestBody ApiUsageLog log) {
+        service.create(log);
+    }
+
+    @GetMapping
+    public List<ApiUsageLog> getAll() {
+        return service.findAll();
     }
 }

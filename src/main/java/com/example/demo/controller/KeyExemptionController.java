@@ -1,21 +1,20 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.KeyExemption;
-import com.example.demo.service.KeyExemptionService;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/key-exemptions")
 public class KeyExemptionController {
 
-    private final KeyExemptionService keyExemptionService;
+    private final KeyExemptionService service;
 
-    public KeyExemptionController(KeyExemptionService keyExemptionService) {
-        this.keyExemptionService = keyExemptionService;
+    public KeyExemptionController(KeyExemptionService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void createExemption(@RequestBody KeyExemption exemption) {
-        keyExemptionService.save(exemption);
+    public void create(@RequestBody KeyExemption exemption) {
+        service.create(exemption);
+    }
+
+    @GetMapping
+    public List<KeyExemption> getAll() {
+        return service.findAll();
     }
 }

@@ -1,23 +1,20 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.RateLimitEnforcement;
-import com.example.demo.service.RateLimitEnforcementService;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/rate-limit-enforcements")
 public class RateLimitEnforcementController {
 
-    private final RateLimitEnforcementService rateLimitEnforcementService;
+    private final RateLimitEnforcementService service;
 
-    public RateLimitEnforcementController(
-            RateLimitEnforcementService rateLimitEnforcementService) {
-        this.rateLimitEnforcementService = rateLimitEnforcementService;
+    public RateLimitEnforcementController(RateLimitEnforcementService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public void enforceRateLimit(
-            @RequestBody RateLimitEnforcement enforcement) {
-        rateLimitEnforcementService.enforce(enforcement);
+    public void create(@RequestBody RateLimitEnforcement enforcement) {
+        service.create(enforcement);
+    }
+
+    @GetMapping
+    public List<RateLimitEnforcement> getAll() {
+        return service.findAll();
     }
 }
