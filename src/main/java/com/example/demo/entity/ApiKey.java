@@ -16,5 +16,31 @@ public class ApiKey {
     @JoinColumn(name = "quota_plan_id")
     private QuotaPlan quotaPlan;
 
-    // getters & setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public QuotaPlan getQuotaPlan() {
+        return quotaPlan;
+    }
+
+    public void setQuotaPlan(QuotaPlan quotaPlan) {
+        this.quotaPlan = quotaPlan;
+    }
 }
