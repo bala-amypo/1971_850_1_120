@@ -1,28 +1,46 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.QuotaPlan;
-import com.example.demo.service.QuotaPlanService;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
 
-import java.util.List;
+@Entity
+public class ApiKey {
 
-@RestController
-@RequestMapping("/api/quota-plans")
-public class QuotaPlanController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final QuotaPlanService service;
+    private String keyValue;
+    private Boolean active;
 
-    public QuotaPlanController(QuotaPlanService service) {
-        this.service = service;
+    @ManyToOne
+    @JoinColumn(name = "quota_plan_id")
+    private QuotaPlan quotaPlan;
+
+    public Long getId() {
+        return id;
     }
 
-    @PostMapping
-    public QuotaPlan create(@RequestBody QuotaPlan quotaPlan) {
-        return service.create(quotaPlan);
+    public String getKeyValue() {
+        return keyValue;
     }
 
-    @GetMapping
-    public List<QuotaPlan> getAll() {
-        return service.findAll();
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public QuotaPlan getQuotaPlan() {
+        return quotaPlan;
+    }
+
+    public void setQuotaPlan(QuotaPlan quotaPlan) {
+        this.quotaPlan = quotaPlan;
     }
 }

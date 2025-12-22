@@ -1,20 +1,22 @@
-@RestController
-@RequestMapping("/api/rate-limit-enforcements")
-public class RateLimitEnforcementController {
+package com.example.demo.entity;
 
-    private final RateLimitEnforcementService service;
+import jakarta.persistence.*;
 
-    public RateLimitEnforcementController(RateLimitEnforcementService service) {
-        this.service = service;
-    }
+@Entity
+public class RateLimitEnforcement {
 
-    @PostMapping
-    public void create(@RequestBody RateLimitEnforcement enforcement) {
-        service.create(enforcement);
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @GetMapping
-    public List<RateLimitEnforcement> getAll() {
-        return service.findAll();
-    }
+    private String reason;
+
+    @ManyToOne
+    private ApiKey apiKey;
+
+    public Long getId() { return id; }
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
+    public ApiKey getApiKey() { return apiKey; }
+    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
 }

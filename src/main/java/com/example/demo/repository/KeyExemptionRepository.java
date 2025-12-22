@@ -1,8 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.KeyExemption;
+import com.example.demo.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface KeyExemptionRepository
-        extends JpaRepository<KeyExemption, Long> {
-}
+import java.util.List;
+import java.util.Optional;

@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.ApiKey;
+import com.example.demo.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ApiKeyRepository extends JpaRepository<ApiKey, Long> {
-}
+import java.util.List;
+import java.util.Optional;
