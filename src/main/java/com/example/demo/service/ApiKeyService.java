@@ -1,10 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.ApiKey;
 import java.util.List;
-import java.util.Optional;
 
 public interface ApiKeyService {
-    ApiKey create(ApiKey a);
+
+    ApiKey create(ApiKey apiKey);
+
     List<ApiKey> findAll();
 }

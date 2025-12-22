@@ -1,10 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.QuotaPlan;
 import java.util.List;
-import java.util.Optional;
 
 public interface QuotaPlanService {
-    QuotaPlan create(QuotaPlan q);
+
+    QuotaPlan create(QuotaPlan quotaPlan);
+
     List<QuotaPlan> findAll();
 }
