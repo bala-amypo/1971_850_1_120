@@ -4,3 +4,7 @@ import com.example.demo.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
+
+public interface ApiUsageLogRepository extends JpaRepository<ApiUsageLog, Long> {
+    List<ApiUsageLog> findByApiKey_Id(Long apiKeyId);
+}
