@@ -1,26 +1,15 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@Entity
-public class KeyExemption {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Boolean unlimitedAccess;
-    private LocalDateTime validUntil;
-
-    @OneToOne
-    private ApiKey apiKey;
-
-    public Long getId() { return id; }
-    public Boolean getUnlimitedAccess() { return unlimitedAccess; }
-    public void setUnlimitedAccess(Boolean unlimitedAccess) { this.unlimitedAccess = unlimitedAccess; }
-    public LocalDateTime getValidUntil() { return validUntil; }
-    public void setValidUntil(LocalDateTime validUntil) { this.validUntil = validUntil; }
-    public ApiKey getApiKey() { return apiKey; }
-    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
+@RestController
+@RequestMapping("/api/key-exemptions")
+public class KeyExemptionController {
+    private final KeyExemptionService s;
+    public KeyExemptionController(KeyExemptionService s) { this.s = s; }
+    @PostMapping public void create(@RequestBody KeyExemption e) { s.create(e); }
+    @GetMapping public List<KeyExemption> getAll() { return s.findAll(); }
 }

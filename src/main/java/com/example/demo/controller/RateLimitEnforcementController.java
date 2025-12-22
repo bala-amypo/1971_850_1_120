@@ -1,22 +1,15 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@Entity
-public class RateLimitEnforcement {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String reason;
-
-    @ManyToOne
-    private ApiKey apiKey;
-
-    public Long getId() { return id; }
-    public String getReason() { return reason; }
-    public void setReason(String reason) { this.reason = reason; }
-    public ApiKey getApiKey() { return apiKey; }
-    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
+@RestController
+@RequestMapping("/api/rate-limit-enforcements")
+public class RateLimitEnforcementController {
+    private final RateLimitEnforcementService s;
+    public RateLimitEnforcementController(RateLimitEnforcementService s) { this.s = s; }
+    @PostMapping public void create(@RequestBody RateLimitEnforcement r) { s.create(r); }
+    @GetMapping public List<RateLimitEnforcement> getAll() { return s.findAll(); }
 }
