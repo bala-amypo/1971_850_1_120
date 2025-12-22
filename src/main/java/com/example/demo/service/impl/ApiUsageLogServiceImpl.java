@@ -10,19 +10,19 @@ import java.util.List;
 @Service
 public class ApiUsageLogServiceImpl implements ApiUsageLogService {
 
-    private final ApiUsageLogRepository apiUsageLogRepository;
+    private final ApiUsageLogRepository repository;
 
-    public ApiUsageLogServiceImpl(ApiUsageLogRepository apiUsageLogRepository) {
-        this.apiUsageLogRepository = apiUsageLogRepository;
+    public ApiUsageLogServiceImpl(ApiUsageLogRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public ApiUsageLog create(ApiUsageLog log) {
-        return apiUsageLogRepository.save(log);
+        return repository.save(log);
     }
 
     @Override
     public List<ApiUsageLog> findAll() {
-        return apiUsageLogRepository.findAll();
+        return repository.findAll();
     }
 }

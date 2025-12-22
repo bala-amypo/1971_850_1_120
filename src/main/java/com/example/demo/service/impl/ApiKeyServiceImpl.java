@@ -23,10 +23,12 @@ public class ApiKeyServiceImpl implements ApiKeyService {
 
     @Override
     public ApiKey create(ApiKey apiKey) {
-        Long quotaPlanId = apiKey.getQuotaPlan().getId();
-        QuotaPlan quotaPlan = quotaPlanRepository.findById(quotaPlanId)
-                .orElseThrow(() -> new RuntimeException("QuotaPlan not found"));
-        apiKey.setQuotaPlan(quotaPlan);
+        if (apiKey.getQuotaPlan() != null && apiKey.getQuotaPlan().getId() != null) {
+            QuotaPlan plan = quotaPlanRepository
+                    .findById(apiKey.getQuotaPlan().getId())
+                    .orElseThrow(() -> new RuntimeException("Quota plan not found"));
+            apiKey.setQuotaPlan(plan);
+        }
         return apiKeyRepository.save(apiKey);
     }
 
