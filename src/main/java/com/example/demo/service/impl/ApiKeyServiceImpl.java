@@ -1,25 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
-import com.example.demo.service.*;
+import com.example.demo.entity.ApiKey;
+import com.example.demo.entity.QuotaPlan;
+import com.example.demo.repository.ApiKeyRepository;
+import com.example.demo.repository.QuotaPlanRepository;
+import com.example.demo.service.ApiKeyService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class ApiKeyServiceImpl implements ApiKeyService {
-    private final ApiKeyRepository repo;
-    private final QuotaPlanRepository planRepo;
 
-    public ApiKeyServiceImpl(ApiKeyRepository repo, QuotaPlanRepository planRepo) {
-        this.repo = repo;
-        this.planRepo = planRepo;
+    private final ApiKeyRepository apiKeyRepository;
+    private final QuotaPlanRepository quotaPlanRepository;
+
+    public ApiKeyServiceImpl(ApiKeyRepository apiKeyRepository,
+                             QuotaPlanRepository quotaPlanRepository) {
+        this.apiKeyRepository = apiKeyRepository;
+        this.quotaPlanRepository = quotaPlanRepository;
     }
 
-    public ApiKey create(ApiKey a) {
-        a.setQuotaPlan(planRepo.findById(a.getQuotaPlan().getId()).orElseThrow());
-        return repo.save(a);
+    @Override
+    public ApiKey create(ApiKey apiKey) {
+        Long quotaPlanId = apiKey.getQuotaPlan().getId();
+        QuotaPlan quotaPlan = quotaPlanRepository.findById(quotaPlanId)
+                .orElseThrow(() -> new RuntimeException("QuotaPlan not found"));
+        apiKey.setQuotaPlan(quotaPlan);
+        return apiKeyRepository.save(apiKey);
     }
 
-    public List<ApiKey> findAll() { return repo.findAll(); }
+    @Override
+    public List<ApiKey> findAll() {
+        return apiKeyRepository.findAll();
+    }
 }

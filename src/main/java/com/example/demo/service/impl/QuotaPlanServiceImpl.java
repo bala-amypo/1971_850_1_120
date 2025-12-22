@@ -1,15 +1,28 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
-import com.example.demo.service.*;
+import com.example.demo.entity.QuotaPlan;
+import com.example.demo.repository.QuotaPlanRepository;
+import com.example.demo.service.QuotaPlanService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class QuotaPlanServiceImpl implements QuotaPlanService {
-    private final QuotaPlanRepository repo;
-    public QuotaPlanServiceImpl(QuotaPlanRepository repo) { this.repo = repo; }
-    public QuotaPlan create(QuotaPlan q) { return repo.save(q); }
-    public List<QuotaPlan> findAll() { return repo.findAll(); }
+
+    private final QuotaPlanRepository quotaPlanRepository;
+
+    public QuotaPlanServiceImpl(QuotaPlanRepository quotaPlanRepository) {
+        this.quotaPlanRepository = quotaPlanRepository;
+    }
+
+    @Override
+    public QuotaPlan create(QuotaPlan quotaPlan) {
+        return quotaPlanRepository.save(quotaPlan);
+    }
+
+    @Override
+    public List<QuotaPlan> findAll() {
+        return quotaPlanRepository.findAll();
+    }
 }

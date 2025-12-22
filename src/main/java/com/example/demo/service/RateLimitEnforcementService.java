@@ -1,10 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.RateLimitEnforcement;
 import java.util.List;
-import java.util.Optional;
 
 public interface RateLimitEnforcementService {
-    RateLimitEnforcement create(RateLimitEnforcement r);
+
+    RateLimitEnforcement create(RateLimitEnforcement enforcement);
+
     List<RateLimitEnforcement> findAll();
 }
