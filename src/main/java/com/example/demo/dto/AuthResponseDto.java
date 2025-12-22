@@ -2,41 +2,21 @@ package com.example.demo.dto;
 
 public class AuthResponseDto {
 
-    private Long userId;
-    private String email;
-    private String role;
     private String token;
 
-    public AuthResponseDto() {}
-
-    public Long getUserId() {
-        return userId;
+    // ✅ REQUIRED no-arg constructor
+    public AuthResponseDto() {
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    // ✅ REQUIRED constructor with token
+    public AuthResponseDto(String token) {
+        this.token = token;
     }
 
-    public String getEmail() {
-        return email;
-    }
- 
-    public void setEmail(String email) {
-        this.email = email;
-    }
- 
-    public String getRole() {
-        return role;
-    }
- 
-    public void setRole(String role) {
-        this.role = role;
-    }
- 
     public String getToken() {
         return token;
     }
- 
+
     public void setToken(String token) {
         this.token = token;
     }
