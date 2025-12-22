@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.ApiKey;
+import com.example.demo.entity.QuotaPlan;
 import com.example.demo.repository.ApiKeyRepository;
+import com.example.demo.repository.QuotaPlanRepository;
 import com.example.demo.service.ApiKeyService;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +12,26 @@ import java.util.List;
 @Service
 public class ApiKeyServiceImpl implements ApiKeyService {
 
-    private final ApiKeyRepository apiKeyRepo;
+    private final ApiKeyRepository apiKeyRepository;
+    private final QuotaPlanRepository quotaPlanRepository;
 
-    public ApiKeyServiceImpl(ApiKeyRepository apiKeyRepo) {
-        this.apiKeyRepo = apiKeyRepo;
+    public ApiKeyServiceImpl(ApiKeyRepository apiKeyRepository,
+                             QuotaPlanRepository quotaPlanRepository) {
+        this.apiKeyRepository = apiKeyRepository;
+        this.quotaPlanRepository = quotaPlanRepository;
     }
 
     @Override
     public ApiKey create(ApiKey apiKey) {
-        return apiKeyRepo.save(apiKey);
+        QuotaPlan plan = quotaPlanRepository
+                .findById(apiKey.getQuotaPlan().getId())
+                .orElseThrow();
+        apiKey.setQuotaPlan(plan);
+        return apiKeyRepository.save(apiKey);
     }
 
     @Override
     public List<ApiKey> findAll() {
-        return apiKeyRepo.findAll();
+        return apiKeyRepository.findAll();
     }
 }

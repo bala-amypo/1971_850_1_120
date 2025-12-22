@@ -10,14 +10,19 @@ import java.util.List;
 @RequestMapping("/api/quota-plans")
 public class QuotaPlanController {
 
-    private final QuotaPlanService quotaPlanService;
+    private final QuotaPlanService service;
 
-    public QuotaPlanController(QuotaPlanService quotaPlanService) {
-        this.quotaPlanService = quotaPlanService;
+    public QuotaPlanController(QuotaPlanService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public QuotaPlan create(@RequestBody QuotaPlan quotaPlan) {
+        return service.create(quotaPlan);
     }
 
     @GetMapping
-    public List<QuotaPlan> getAllQuotaPlans() {
-        return quotaPlanService.findAll();
+    public List<QuotaPlan> getAll() {
+        return service.findAll();
     }
 }
