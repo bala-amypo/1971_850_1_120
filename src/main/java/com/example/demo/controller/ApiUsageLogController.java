@@ -1,33 +1,28 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.UsageLog;
-import com.example.demo.service.UsageLogService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.entity.ApiUsageLog;
+import com.example.demo.service.ApiUsageLogService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/usage-logs")
-public class UsageLogController {
+public class ApiUsageLogController {
 
-    private final UsageLogService usageLogService;
+    private final ApiUsageLogService apiUsageLogService;
 
-    public UsageLogController(UsageLogService usageLogService) {
-        this.usageLogService = usageLogService;
+    public ApiUsageLogController(ApiUsageLogService apiUsageLogService) {
+        this.apiUsageLogService = apiUsageLogService;
     }
 
-    // ✅ POST – Create usage log
     @PostMapping
-    public ResponseEntity<UsageLog> createUsageLog(
-            @Valid @RequestBody UsageLog usageLog) {
-        return ResponseEntity.ok(usageLogService.save(usageLog));
+    public ApiUsageLog create(@RequestBody ApiUsageLog log) {
+        return apiUsageLogService.create(log);
     }
 
-    // ✅ GET – Fetch all usage logs
     @GetMapping
-    public ResponseEntity<List<UsageLog>> getAllUsageLogs() {
-        return ResponseEntity.ok(usageLogService.findAll());
+    public List<ApiUsageLog> getAll() {
+        return apiUsageLogService.findAll();
     }
 }

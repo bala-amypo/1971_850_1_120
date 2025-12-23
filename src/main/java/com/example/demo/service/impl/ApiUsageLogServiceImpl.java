@@ -1,28 +1,28 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.UsageLog;
-import com.example.demo.repository.UsageLogRepository;
-import com.example.demo.service.UsageLogService;
+import com.example.demo.entity.ApiUsageLog;
+import com.example.demo.repository.ApiUsageLogRepository;
+import com.example.demo.service.ApiUsageLogService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UsageLogServiceImpl implements UsageLogService {
+public class ApiUsageLogServiceImpl implements ApiUsageLogService {
 
-    private final UsageLogRepository repository;
+    private final ApiUsageLogRepository repository;
 
-    public UsageLogServiceImpl(UsageLogRepository repository) {
+    public ApiUsageLogServiceImpl(ApiUsageLogRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public UsageLog save(UsageLog usageLog) {
-        return repository.save(usageLog);
+    public ApiUsageLog create(ApiUsageLog log) {
+        return repository.save(log);
     }
 
     @Override
-    public List<UsageLog> findAll() {
+    public List<ApiUsageLog> findAll() {
         return repository.findAll();
     }
 }

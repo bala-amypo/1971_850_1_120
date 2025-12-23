@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.UsageLog;
+import com.example.demo.entity.ApiUsageLog;
 import java.util.List;
 
-public interface UsageLogService {
-    UsageLog save(UsageLog usageLog);
-    List<UsageLog> findAll();
+public interface ApiUsageLogService {
+
+    ApiUsageLog create(ApiUsageLog log);
+
+    List<ApiUsageLog> findAll();
 }
