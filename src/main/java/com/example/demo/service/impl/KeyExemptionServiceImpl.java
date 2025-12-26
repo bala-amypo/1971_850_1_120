@@ -1,15 +1,21 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.ApiKey;
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.ApiKeyRepository;
-import com.example.demo.repository.QuotaPlanRepository;
-import com.example.demo.service.ApiKeyService;
+import com.example.demo.entity.KeyExemption;
+import com.example.demo.repository.KeyExemptionRepository;
+import com.example.demo.service.KeyExemptionService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class KeyExemptionServiceImpl implements KeyExemptionService {
+
+    private final KeyExemptionRepository repository;
+
+    public KeyExemptionServiceImpl(KeyExemptionRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public KeyExemption createExemption(KeyExemption exemption) {
+        return repository.save(exemption);
+    }
 }
