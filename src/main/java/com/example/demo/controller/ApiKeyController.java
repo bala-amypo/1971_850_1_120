@@ -2,43 +2,43 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ApiKey;
 import com.example.demo.service.ApiKeyService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api-keys")
+@RequestMapping("/api/api-keys")
 public class ApiKeyController {
 
-    private final ApiKeyService service;
+    private final ApiKeyService apiKeyService;
 
-    public ApiKeyController(ApiKeyService service) {
-        this.service = service;
+    public ApiKeyController(ApiKeyService apiKeyService) {
+        this.apiKeyService = apiKeyService;
     }
 
     @PostMapping
-    public ApiKey create(@RequestBody ApiKey key) {
-        return service.createApiKey(key);
+    public ApiKey create(@RequestBody ApiKey apiKey) {
+        return apiKeyService.createApiKey(apiKey);
     }
 
     @PutMapping("/{id}")
-    public ApiKey update(@PathVariable Long id,
-                         @RequestBody ApiKey key) {
-        return service.updateApiKey(id, key);
+    public ApiKey update(@PathVariable Long id, @RequestBody ApiKey apiKey) {
+        return apiKeyService.updateApiKey(id, apiKey);
     }
 
     @GetMapping("/{id}")
     public ApiKey getById(@PathVariable Long id) {
-        return service.getApiKeyById(id);
+        return apiKeyService.getApiKeyById(id);
     }
 
     @GetMapping
     public List<ApiKey> getAll() {
-        return service.getAllApiKeys();
+        return apiKeyService.getAllApiKeys();
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
-        service.deactivateApiKey(id);
+        apiKeyService.deactivateApiKey(id);
     }
 }

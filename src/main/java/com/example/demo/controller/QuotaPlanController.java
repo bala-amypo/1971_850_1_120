@@ -2,12 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.QuotaPlan;
 import com.example.demo.service.QuotaPlanService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/quota-plans")
+@RequestMapping("/api/quota-plans")
 public class QuotaPlanController {
 
     private final QuotaPlanService service;
@@ -22,8 +23,7 @@ public class QuotaPlanController {
     }
 
     @PutMapping("/{id}")
-    public QuotaPlan update(@PathVariable Long id,
-                            @RequestBody QuotaPlan plan) {
+    public QuotaPlan update(@PathVariable Long id, @RequestBody QuotaPlan plan) {
         return service.updateQuotaPlan(id, plan);
     }
 
@@ -35,5 +35,10 @@ public class QuotaPlanController {
     @GetMapping
     public List<QuotaPlan> getAll() {
         return service.getAllPlans();
+    }
+
+    @PutMapping("/{id}/deactivate")
+    public void deactivate(@PathVariable Long id) {
+        service.deactivateQuotaPlan(id);
     }
 }
