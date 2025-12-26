@@ -1,12 +1,22 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.time.Instant;
 
+@Entity
+@Table(name = "api_usage_logs")
 public class ApiUsageLog {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "api_key_id")
     private ApiKey apiKey;
+
     private String endpoint;
+
     private Instant timestamp;
 
     public ApiUsageLog() {}
