@@ -1,25 +1,19 @@
 package com.example.demo.security;
 
-import com.example.demo.repository.UserAccountRepository;
-import org.springframework.security.core.userdetails.*;
 import com.example.demo.entity.UserAccount;
+import com.example.demo.repository.UserAccountRepository;
 
-public class CustomUserDetailsService implements UserDetailsService {
+import java.util.Optional;
 
-    private final UserAccountRepository repo;
+public class CustomUserDetailsService {
 
-    public CustomUserDetailsService(UserAccountRepository repo) {
-        this.repo = repo;
+    private final UserAccountRepository userRepository;
+
+    public CustomUserDetailsService(UserAccountRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        UserAccount u = repo.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("Not found"));
-
-        return User.withUsername(u.getEmail())
-                .password(u.getPassword())
-                .roles(u.getRole().replace("ROLE_", ""))
-                .build();
+    public Optional<UserAccount> loadUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
