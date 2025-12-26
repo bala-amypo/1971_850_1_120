@@ -21,6 +21,8 @@ public class AuthServiceImpl implements AuthService {
         this.userAccountRepository = userAccountRepository;
         this.jwtUtil = jwtUtil;
     }
+    
+
 
     @Override
     public void register(RegisterRequestDto dto) {
