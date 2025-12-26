@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.RateLimitEnforcement;
+
 public interface RateLimitEnforcementService {
-    boolean allowRequest(String apiKey);
+
+    RateLimitEnforcement createEnforcement(RateLimitEnforcement enforcement);
 }

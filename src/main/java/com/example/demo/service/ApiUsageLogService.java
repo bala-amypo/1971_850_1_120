@@ -1,5 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.ApiUsageLog;
+
+import java.util.List;
+
 public interface ApiUsageLogService {
-    void logUsage(String apiKey);
+
+    ApiUsageLog logUsage(ApiUsageLog log);
+
+    List<ApiUsageLog> getUsageForToday(Long apiKeyId);
+
+    int countRequestsToday(Long apiKeyId);
 }

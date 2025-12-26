@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.KeyExemption;
+
 public interface KeyExemptionService {
-    boolean isExempted(String apiKey);
+
+    KeyExemption createExemption(KeyExemption exemption);
 }
