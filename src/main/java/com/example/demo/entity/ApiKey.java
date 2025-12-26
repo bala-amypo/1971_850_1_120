@@ -1,11 +1,12 @@
 package com.example.demo.entity;
 
 public class ApiKey {
+
     private Long id;
     private String keyValue;
-    private boolean active = true;
     private Long ownerId;
     private QuotaPlan plan;
+    private Boolean active = true;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -13,12 +14,12 @@ public class ApiKey {
     public String getKeyValue() { return keyValue; }
     public void setKeyValue(String keyValue) { this.keyValue = keyValue; }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
-
     public Long getOwnerId() { return ownerId; }
     public void setOwnerId(Long ownerId) { this.ownerId = ownerId; }
 
     public QuotaPlan getPlan() { return plan; }
     public void setPlan(QuotaPlan plan) { this.plan = plan; }
+
+    public Boolean isActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

@@ -3,16 +3,17 @@ package com.example.demo.entity;
 import java.time.Instant;
 
 public class KeyExemption {
+
     private Long id;
     private ApiKey apiKey;
-    private int temporaryExtensionLimit;
+    private Integer temporaryExtensionLimit;
     private Instant validUntil;
 
     public ApiKey getApiKey() { return apiKey; }
     public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
 
-    public int getTemporaryExtensionLimit() { return temporaryExtensionLimit; }
-    public void setTemporaryExtensionLimit(int temporaryExtensionLimit) {
+    public Integer getTemporaryExtensionLimit() { return temporaryExtensionLimit; }
+    public void setTemporaryExtensionLimit(Integer temporaryExtensionLimit) {
         this.temporaryExtensionLimit = temporaryExtensionLimit;
     }
 

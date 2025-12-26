@@ -1,17 +1,14 @@
 package com.example.demo.entity;
 
 public class RateLimitEnforcement {
+
     private Long id;
     private ApiKey apiKey;
-    private int limitExceededBy;
-    private String message;
+    private Integer limitExceededBy;
 
     public ApiKey getApiKey() { return apiKey; }
     public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
 
-    public int getLimitExceededBy() { return limitExceededBy; }
-    public void setLimitExceededBy(int limitExceededBy) { this.limitExceededBy = limitExceededBy; }
-
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public Integer getLimitExceededBy() { return limitExceededBy; }
+    public void setLimitExceededBy(Integer limitExceededBy) { this.limitExceededBy = limitExceededBy; }
 }
