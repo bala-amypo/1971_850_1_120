@@ -1,5 +1,4 @@
 package com.example.demo.service.impl;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.KeyExemption;
 import com.example.demo.exception.BadRequestException;
@@ -7,56 +6,55 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ApiKeyRepository;
 import com.example.demo.repository.KeyExemptionRepository;
 import com.example.demo.service.KeyExemptionService;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 @Service
 public class KeyExemptionServiceImpl implements KeyExemptionService {
 
-    private final KeyExemptionRepository exemptionRepository;
-    private final ApiKeyRepository apiKeyRepository;
+    private final KeyExemptionRepository repo;
+    private final ApiKeyRepository keyRepo;
 
-    public KeyExemptionServiceImpl(KeyExemptionRepository exemptionRepository,
-                                   ApiKeyRepository apiKeyRepository) {
-        this.exemptionRepository = exemptionRepository;
-        this.apiKeyRepository = apiKeyRepository;
+    public KeyExemptionServiceImpl(KeyExemptionRepository repo, ApiKeyRepository keyRepo) {
+        this.repo = repo;
+        this.keyRepo = keyRepo;
     }
 
     @Override
-    public KeyExemption createExemption(KeyExemption exemption) {
-        if (exemption.getTemporaryExtensionLimit() < 0) {
+    public KeyExemption createExemption(KeyExemption e) {
+        if (e.getTemporaryExtensionLimit() < 0) {
             throw new BadRequestException("Invalid extension limit");
         }
-
-        if (exemption.getValidUntil().isBefore(Instant.now())) {
+        if (e.getValidUntil() != null && e.getValidUntil().isBefore(Instant.now())) {
             throw new BadRequestException("Invalid expiry");
         }
 
-        apiKeyRepository.findById(exemption.getApiKey().getId())
+        keyRepo.findById(e.getApiKey().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("ApiKey not found"));
 
-        return exemptionRepository.save(exemption);
+        return repo.save(e);
     }
 
     @Override
-    public KeyExemption updateExemption(Long id, KeyExemption exemption) {
-        KeyExemption existing = exemptionRepository.findById(id)
+    public KeyExemption updateExemption(Long id, KeyExemption e) {
+        KeyExemption existing = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Exemption not found"));
 
-        existing.setTemporaryExtensionLimit(exemption.getTemporaryExtensionLimit());
-        existing.setValidUntil(exemption.getValidUntil());
+        existing.setTemporaryExtensionLimit(e.getTemporaryExtensionLimit());
+        existing.setValidUntil(e.getValidUntil());
 
-        return exemptionRepository.save(existing);
+        return repo.save(existing);
     }
 
     @Override
-    public Optional<KeyExemption> getExemptionByKey(Long apiKeyId) {
-        return exemptionRepository.findByApiKey_Id(apiKeyId);
+    public KeyExemption getExemptionByKey(Long apiKeyId) {
+        return repo.findByApiKey_Id(apiKeyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exemption not found"));
     }
 
     @Override
     public List<KeyExemption> getAllExemptions() {
-        return exemptionRepository.findAll();
+        return repo.findAll();
     }
 }

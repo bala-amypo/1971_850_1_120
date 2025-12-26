@@ -4,8 +4,7 @@ import com.example.demo.entity.RateLimitEnforcement;
 import java.util.List;
 
 public interface RateLimitEnforcementService {
-
-    RateLimitEnforcement enforce(Long apiKeyId);
-
-    List<RateLimitEnforcement> getByApiKey(Long apiKeyId);
+    RateLimitEnforcement createEnforcement(RateLimitEnforcement e);
+    RateLimitEnforcement getEnforcementById(Long id);
+    List<RateLimitEnforcement> getEnforcementsForKey(Long keyId);
 }
