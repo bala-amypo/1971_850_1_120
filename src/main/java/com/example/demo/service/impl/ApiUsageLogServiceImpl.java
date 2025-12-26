@@ -33,12 +33,14 @@ public class ApiUsageLogServiceImpl implements ApiUsageLogService {
     }
 
     @Override
-    public int countRequestsToday(Long apiKeyId) {
-        Instant now = Instant.now();
-        return apiUsageLogRepository.countForKeyBetween(
-                apiKeyId,
-                now.minusSeconds(86400),
-                now
-        );
-    }
+public int countRequestsToday(Long apiKeyId) {
+    Instant now = Instant.now();
+    long count = apiUsageLogRepository.countForKeyBetween(
+            apiKeyId,
+            now.minusSeconds(86400),
+            now
+    );
+    return (int) count; // safe cast
+}
+
 }
