@@ -1,18 +1,21 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-@Entity
 public class KeyExemption {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
     private ApiKey apiKey;
+    private int temporaryExtensionLimit;
+    private Instant validUntil;
 
-    private Boolean unlimitedAccess;
-    private LocalDateTime validUntil;
+    public ApiKey getApiKey() { return apiKey; }
+    public void setApiKey(ApiKey apiKey) { this.apiKey = apiKey; }
+
+    public int getTemporaryExtensionLimit() { return temporaryExtensionLimit; }
+    public void setTemporaryExtensionLimit(int temporaryExtensionLimit) {
+        this.temporaryExtensionLimit = temporaryExtensionLimit;
+    }
+
+    public Instant getValidUntil() { return validUntil; }
+    public void setValidUntil(Instant validUntil) { this.validUntil = validUntil; }
 }

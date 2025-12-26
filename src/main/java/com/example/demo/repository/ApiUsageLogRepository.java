@@ -1,7 +1,6 @@
-package com.example.demo.repository;
-
-import com.example.demo.entity.ApiUsageLog;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ApiUsageLogRepository extends JpaRepository<ApiUsageLog, Long> {
+public interface ApiUsageLogRepository {
+    ApiUsageLog save(ApiUsageLog log);
+    List<ApiUsageLog> findByApiKey_Id(Long id);
+    List<ApiUsageLog> findForKeyBetween(Long id, Object a, Object b);
+    int countForKeyBetween(Long id, Object a, Object b);
 }
