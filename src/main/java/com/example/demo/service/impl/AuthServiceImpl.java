@@ -43,4 +43,25 @@ public class AuthServiceImpl implements AuthService {
 
         return new AuthResponseDto(token);
     }
+    @Override
+public AuthResponseDto register(RegisterRequestDto request) {
+    // Example logic: check if user exists
+    if (userAccountRepository.findByEmail(request.getEmail()).isPresent()) {
+        throw new RuntimeException("Email already registered");
+    }
+
+    // Save new user
+    UserAccount user = new UserAccount();
+    user.setEmail(request.getEmail());
+    user.setPassword(request.getPassword()); // Consider hashing
+    user.setRole(request.getRole());
+    userAccountRepository.save(user);
+
+    // Generate JWT token
+    String token = jwtUtil.generateToken(user.getEmail());
+
+    // Return AuthResponseDto
+    return new AuthResponseDto(token, user.getEmail(), user.getId());
+}
+
 }

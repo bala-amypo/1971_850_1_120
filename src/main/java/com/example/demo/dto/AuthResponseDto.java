@@ -37,4 +37,6 @@ public class AuthResponseDto {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    return new AuthResponseDto(token, user.getEmail(), user.getId());
+
 }
