@@ -1,15 +1,13 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.AuthRequestDto;
 import com.example.demo.dto.AuthResponseDto;
+import com.example.demo.dto.RegisterRequestDto;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -24,44 +22,29 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponseDto login(AuthRequestDto request) {
-        // Find user by email
-        Optional<UserAccount> userOpt = userAccountRepository.findByEmail(request.getEmail());
-        if (userOpt.isEmpty()) {
-            throw new RuntimeException("Invalid email or password");
-        }
+    public AuthResponseDto register(RegisterRequestDto request) {
+        // Create a new user
+        UserAccount user = new UserAccount();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword()); // TODO: encode password
+        user.setRole(request.getRole());
 
-        UserAccount user = userOpt.get();
+        user = userAccountRepository.save(user);
 
-        // Check password
-        if (!user.getPassword().equals(request.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
-        }
+        // Generate JWT token
+        String token = jwtUtil.generateToken(user);
 
-        // Generate JWT token using the user's email (or username)
-        String token = jwtUtil.generateToken(user.getEmail());
-
-        return new AuthResponseDto(token);
+        return new AuthResponseDto(token, user.getEmail(), user.getId());
     }
+
     @Override
-public AuthResponseDto register(RegisterRequestDto request) {
-    // Example logic: check if user exists
-    if (userAccountRepository.findByEmail(request.getEmail()).isPresent()) {
-        throw new RuntimeException("Email already registered");
+    public AuthResponseDto login(String email, String password) {
+        UserAccount user = userAccountRepository.findByEmail(email);
+        if (user == null || !user.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        String token = jwtUtil.generateToken(user);
+        return new AuthResponseDto(token, user.getEmail(), user.getId());
     }
-
-    // Save new user
-    UserAccount user = new UserAccount();
-    user.setEmail(request.getEmail());
-    user.setPassword(request.getPassword()); // Consider hashing
-    user.setRole(request.getRole());
-    userAccountRepository.save(user);
-
-    // Generate JWT token
-    String token = jwtUtil.generateToken(user.getEmail());
-
-    // Return AuthResponseDto
-    return new AuthResponseDto(token, user.getEmail(), user.getId());
-}
-
 }
