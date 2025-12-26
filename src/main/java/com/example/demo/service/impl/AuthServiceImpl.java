@@ -1,48 +1,45 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
-import com.example.demo.entity.UserAccount;
-import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.dto.*;
+import com.example.demo.entity.*;
+import com.example.demo.exception.*;
+import com.example.demo.repository.*;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Map;
+
 public class AuthServiceImpl implements AuthService {
 
-    private final UserAccountRepository userRepo;
+    private final UserAccountRepository repo;
     private final PasswordEncoder encoder;
-    private final JwtUtil jwtUtil;
+    private final AuthenticationManager manager;
+    private final JwtUtil jwt;
 
-    public AuthServiceImpl(UserAccountRepository userRepo,
-                           PasswordEncoder encoder,
-                           JwtUtil jwtUtil) {
-        this.userRepo = userRepo;
-        this.encoder = encoder;
-        this.jwtUtil = jwtUtil;
+    public AuthServiceImpl(UserAccountRepository r, PasswordEncoder e,
+                           AuthenticationManager m, JwtUtil j) {
+        this.repo = r; this.encoder = e; this.manager = m; this.jwt = j;
     }
 
-    @Override
     public void register(RegisterRequestDto dto) {
-        UserAccount user = new UserAccount();
-        user.setEmail(dto.getEmail());
-        user.setPassword(encoder.encode(dto.getPassword()));
-        userRepo.save(user);
+        if (repo.existsByEmail(dto.getEmail()))
+            throw new BadRequestException("Duplicate email");
+
+        UserAccount u = new UserAccount();
+        u.setEmail(dto.getEmail());
+        u.setPassword(encoder.encode(dto.getPassword()));
+        u.setRole("ROLE_" + dto.getRole());
+
+        repo.save(u);
     }
 
-    @Override
     public AuthResponseDto login(AuthRequestDto dto) {
-        UserAccount user = userRepo.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+        UserAccount user = repo.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid"));
 
-        if (!encoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
-
-        String token = jwtUtil.generateToken(user.getEmail());
+        String token = jwt.generateToken(Map.of(), user.getEmail());
         return new AuthResponseDto(token);
     }
 }
