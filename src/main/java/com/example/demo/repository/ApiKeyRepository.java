@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ApiKeyRepository {
+
+    ApiKey save(ApiKey apiKey);
+
     Optional<ApiKey> findById(Long id);
-    Optional<ApiKey> findByKeyValue(String value);
+
     List<ApiKey> findAll();
-    ApiKey save(ApiKey k);
 }

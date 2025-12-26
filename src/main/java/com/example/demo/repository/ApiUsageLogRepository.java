@@ -1,11 +1,15 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.ApiUsageLog;
+
+import java.time.Instant;
 import java.util.List;
 
 public interface ApiUsageLogRepository {
+
     ApiUsageLog save(ApiUsageLog log);
-    List<ApiUsageLog> findByApiKey_Id(Long id);
-    List<ApiUsageLog> findForKeyBetween(Long id, Object a, Object b);
-    int countForKeyBetween(Long id, Object a, Object b);
+
+    List<ApiUsageLog> findForKeyBetween(Long apiKeyId, Instant start, Instant end);
+
+    int countForKeyBetween(Long apiKeyId, Instant start, Instant end);
 }

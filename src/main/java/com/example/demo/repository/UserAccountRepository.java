@@ -4,7 +4,10 @@ import com.example.demo.entity.UserAccount;
 import java.util.Optional;
 
 public interface UserAccountRepository {
-    Optional<UserAccount> findByEmail(String email);
-    boolean existsByEmail(String email);
+
     UserAccount save(UserAccount user);
+
+    Optional<UserAccount> findById(Long id);
+
+    Optional<UserAccount> findByEmail(String email);
 }
