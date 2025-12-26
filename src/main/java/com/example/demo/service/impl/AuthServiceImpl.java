@@ -4,7 +4,7 @@ import com.example.demo.dto.AuthRequestDto;
 import com.example.demo.dto.AuthResponseDto;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
-
+@Service
 public class AuthServiceImpl implements AuthService {
 
     private final JwtUtil jwtUtil;

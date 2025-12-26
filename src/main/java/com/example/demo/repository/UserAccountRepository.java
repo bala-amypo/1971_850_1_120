@@ -3,7 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.UserAccount;
 
 import java.util.Optional;
-
+@Repository
 public interface UserAccountRepository {
 
     Optional<UserAccount> findByUsername(String username);

@@ -4,7 +4,7 @@ import com.example.demo.entity.KeyExemption;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface KeyExemptionRepository {
 
     KeyExemption save(KeyExemption exemption);

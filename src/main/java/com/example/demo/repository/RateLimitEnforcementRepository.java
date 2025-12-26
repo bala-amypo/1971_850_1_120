@@ -3,7 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.RateLimitEnforcement;
 
 import java.util.List;
-
+@Repository
 public interface RateLimitEnforcementRepository {
 
     RateLimitEnforcement save(RateLimitEnforcement enforcement);

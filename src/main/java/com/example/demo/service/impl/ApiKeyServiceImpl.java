@@ -8,7 +8,7 @@ import com.example.demo.repository.QuotaPlanRepository;
 import com.example.demo.service.ApiKeyService;
 
 import java.util.List;
-
+@Service
 public class ApiKeyServiceImpl implements ApiKeyService {
 
     private final ApiKeyRepository apiKeyRepository;
