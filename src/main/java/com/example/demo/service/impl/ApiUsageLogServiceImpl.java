@@ -1,3 +1,7 @@
+import java.util.List;
+import java.util.Optional;
+import java.time.Instant;
+
 public class ApiUsageLogServiceImpl implements ApiUsageLogService {
 
     private final ApiUsageLogRepository usageRepo;
