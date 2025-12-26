@@ -1,61 +1,29 @@
-package com.example.demo.entity;
+package com.example.demo.repository;
 
-import jakarta.persistence.*;
+import com.example.demo.entity.ApiUsageLog;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.time.Instant;
+import java.util.List;
 
-@Entity
-@Table(name = "api_usage_logs")
-public class ApiUsageLog {
+public interface ApiUsageLogRepository extends JpaRepository<ApiUsageLog, Long> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Query("""
+        SELECT l FROM ApiUsageLog l
+        WHERE l.apiKey.id = :apiKeyId
+        AND l.timestamp BETWEEN :start AND :end
+    """)
+    List<ApiUsageLog> findForKeyBetween(@Param("apiKeyId") Long apiKeyId,
+                                        @Param("start") Instant start,
+                                        @Param("end") Instant end);
 
-    @ManyToOne
-    @JoinColumn(name = "api_key_id")
-    private ApiKey apiKey;
-
-    private String endpoint;
-
-    private Instant timestamp;
-
-    public ApiUsageLog() {}
-
-    public ApiUsageLog(ApiKey apiKey, String endpoint, Instant timestamp) {
-        this.apiKey = apiKey;
-        this.endpoint = endpoint;
-        this.timestamp = timestamp;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ApiKey getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(ApiKey apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
-    }
+    @Query("""
+        SELECT COUNT(l) FROM ApiUsageLog l
+        WHERE l.apiKey.id = :apiKeyId
+        AND l.timestamp BETWEEN :start AND :end
+    """)
+    long countForKeyBetween(@Param("apiKeyId") Long apiKeyId,
+                            @Param("start") Instant start,
+                            @Param("end") Instant end);
 }
