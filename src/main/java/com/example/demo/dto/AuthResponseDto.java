@@ -6,7 +6,7 @@ public class AuthResponseDto {
     private String email;
     private Long userId;
 
-    public AuthResponseDto() {}
+    public AuthResponseDto() {} // default constructor
 
     public AuthResponseDto(String token, String email, Long userId) {
         this.token = token;

@@ -10,3 +10,4 @@ public interface AuthService {
 
     AuthResponseDto login(AuthRequestDto dto);
 }
+AuthResponseDto register(RegisterRequestDto request);
