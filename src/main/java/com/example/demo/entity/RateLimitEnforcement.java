@@ -1,22 +1,45 @@
 package com.example.demo.entity;
 
-import java.time.Instant;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "rate_limit_enforcements")
 public class RateLimitEnforcement {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private ApiKey apiKey;
-    private Instant timestamp;
 
-    public RateLimitEnforcement() {
-    }
+    private Integer limitExceededBy;
+    private String message;
+
+    @ManyToOne
+    private ApiKey apiKey;
+
+    public RateLimitEnforcement() {}
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) {      // ✅ added (safe)
         this.id = id;
+    }
+
+    public Integer getLimitExceededBy() {
+        return limitExceededBy;
+    }
+
+    public void setLimitExceededBy(Integer limitExceededBy) {
+        this.limitExceededBy = limitExceededBy;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public ApiKey getApiKey() {
@@ -25,13 +48,5 @@ public class RateLimitEnforcement {
 
     public void setApiKey(ApiKey apiKey) {
         this.apiKey = apiKey;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
     }
 }

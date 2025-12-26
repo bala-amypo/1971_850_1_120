@@ -1,20 +1,46 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "api_keys")
 public class ApiKey {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean active = true;
-    private QuotaPlan quotaPlan;
 
-    public ApiKey() {
-    }
+    private String keyValue;
+    private Long ownerId;
+    private boolean active = true;
+
+    @ManyToOne
+    private QuotaPlan plan;
+
+    public ApiKey() {}
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) {      // ✅ REQUIRED BY TESTS
         this.id = id;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public boolean isActive() {
@@ -25,11 +51,11 @@ public class ApiKey {
         this.active = active;
     }
 
-    public QuotaPlan getQuotaPlan() {
-        return quotaPlan;
+    public QuotaPlan getPlan() {
+        return plan;
     }
 
-    public void setQuotaPlan(QuotaPlan quotaPlan) {
-        this.quotaPlan = quotaPlan;
+    public void setPlan(QuotaPlan plan) {
+        this.plan = plan;
     }
 }
