@@ -9,6 +9,8 @@ import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -23,7 +25,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponseDto register(RegisterRequestDto request) {
-        // Create a new user
         UserAccount user = new UserAccount();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword()); // TODO: encode password
@@ -31,20 +32,26 @@ public class AuthServiceImpl implements AuthService {
 
         user = userAccountRepository.save(user);
 
-        // Generate JWT token
-        String token = jwtUtil.generateToken(user);
+        String token = jwtUtil.generateToken(user.getEmail()); // Pass email or ID
 
         return new AuthResponseDto(token, user.getEmail(), user.getId());
     }
 
     @Override
     public AuthResponseDto login(String email, String password) {
-        UserAccount user = userAccountRepository.findByEmail(email);
-        if (user == null || !user.getPassword().equals(password)) {
+        Optional<UserAccount> optionalUser = userAccountRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        UserAccount user = optionalUser.get();
+
+        if (!user.getPassword().equals(password)) { // TODO: use password encoder
             throw new RuntimeException("Invalid credentials");
         }
 
-        String token = jwtUtil.generateToken(user);
+        String token = jwtUtil.generateToken(user.getEmail());
+
         return new AuthResponseDto(token, user.getEmail(), user.getId());
     }
 }
