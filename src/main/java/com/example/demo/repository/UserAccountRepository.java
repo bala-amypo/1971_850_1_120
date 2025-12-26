@@ -1,13 +1,11 @@
 package com.example.demo.repository;
-import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.UserAccount;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-@Repository
-public interface UserAccountRepository {
 
-    Optional<UserAccount> findByUsername(String username);
-
-    UserAccount save(UserAccount user);
+public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+    Optional<UserAccount> findByEmail(String email);
+    boolean existsByEmail(String email);
 }
